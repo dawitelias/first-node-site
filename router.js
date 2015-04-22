@@ -17,6 +17,7 @@ function home(request, response) {
 function user(request, response) {
   // if url == "/..."
   var username = request.url.replace("/","");
+
   if (username.length > 0) {
     response.writeHead(200, {'Content-Type': 'text/plain'});
     response.write("Header\n");
@@ -28,24 +29,25 @@ function user(request, response) {
       // show profile
 
       // store the values which we need
-      var values {
+      var values = {
         avatarUrl: profileJSON.gravatar_url,
         username: profileJSON.profile_name,
-        badges: profileJSON.badges.length,vg
+        badges: profileJSON.badges.length,
         javascriptPoints: profileJSON.points.JavaScript
-      }
+      };
       // Simple response
-      response.write(username + "\n");
+      response.write(values.username + " has " + values.badges + " badges\n");
       response.end("Footer\n");
     });
 
     // on "error"
     studentProfile.on("error", function(error){
       // show error
+      response.write(error.message + "\n");
       response.end("Footer\n");
     });
-  }
-}
+  } // close if
+} // close function
 
 // export functions so we can access them elsewhere
 module.exports.home = home;
